@@ -34,11 +34,21 @@ urlpatterns = [
         name='token_refresh'
     ),
     path(
-    'api/schema/',
-    SpectacularAPIView.as_view(),
-    name='schema'
-    ),
+        'api/schema/',
+        SpectacularAPIView.as_view(),
+        name='schema'
+        ),
 
+    path(
+        'api/mdm/',
+        include('mdm.urls')
+    ),
+    
+    path(
+        'api/sales/',
+        include('sales.urls')
+    ),
+    
     path(
         'api/docs/',
         SpectacularSwaggerView.as_view(
@@ -46,5 +56,12 @@ urlpatterns = [
         ),
         name='swagger-ui'
     ),
-
+    path(
+        'api/purchases/',
+        include('purchases.urls')
+    ),
+    path(
+        'api/inventory/',
+        include('inventory.urls')
+    ),
 ]

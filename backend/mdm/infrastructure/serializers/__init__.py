@@ -1,0 +1,3 @@
+from .customer_serializer import (
+    CustomerSerializer
+)
