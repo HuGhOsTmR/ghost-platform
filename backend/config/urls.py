@@ -50,6 +50,11 @@ urlpatterns = [
     ),
     
     path(
+        'api/finance/',
+        include('finance.urls')
+    ),
+    
+    path(
         'api/docs/',
         SpectacularSwaggerView.as_view(
             url_name='schema'

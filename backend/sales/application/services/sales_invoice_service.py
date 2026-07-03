@@ -25,6 +25,9 @@ from core.application.services.numeration_service import (
     NumerationService
 )
 
+from finance.application.services import (
+    AccountsReceivableService
+)
 
 class SalesInvoiceService:
 
@@ -210,6 +213,10 @@ class SalesInvoiceService:
         )
 
         invoice.save()
+
+        AccountsReceivableService.create_receivable(
+            sales_invoice=invoice
+        )
 
         fully_invoiced = True
 
