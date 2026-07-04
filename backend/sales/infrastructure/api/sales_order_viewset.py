@@ -10,9 +10,13 @@ from rest_framework.response import (
 from sales.models import (
     SalesOrder
 )
+from rest_framework.decorators import (
+    action
+)
 
 from sales.application.services import (
-    SalesOrderService
+    SalesOrderService,
+    SalesOrderApprovalService
 )
 
 from sales.infrastructure.serializers import (
@@ -36,6 +40,31 @@ from iam.models import (
 class SalesOrderViewSet(
     viewsets.ModelViewSet
 ):
+
+    @action(
+        detail=True,
+        methods=['post']
+    )
+    def approve(
+        self,
+        request,
+        pk=None
+    ):
+
+        order = self.get_object()
+
+        order = (
+            SalesOrderApprovalService
+            .approve_order(
+                order
+            )
+        )
+
+        return Response(
+            SalesOrderSerializer(
+                order
+            ).data
+        )
 
     queryset = (
         SalesOrder.objects

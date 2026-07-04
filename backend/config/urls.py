@@ -55,6 +55,11 @@ urlpatterns = [
     ),
     
     path(
+        'api/treasury/',
+        include('treasury.urls')
+    ),
+    
+    path(
         'api/docs/',
         SpectacularSwaggerView.as_view(
             url_name='schema'
