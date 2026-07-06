@@ -8,7 +8,9 @@ from django.urls import (
 
 from finance.infrastructure.api import (
     AccountsReceivableViewSet,
+    AccountsPayableViewSet,
     CustomerPaymentViewSet,
+    SupplierPaymentViewSet,
     FinanceDashboardAPIView,
     CustomerStatementAPIView,
     SupplierStatementAPIView
@@ -26,6 +28,18 @@ router.register(
     r'customer-payments',
     CustomerPaymentViewSet,
     basename='customer-payment'
+)
+
+router.register(
+    r'accounts-payable',
+    AccountsPayableViewSet,
+    basename='accounts-payable'
+)
+
+router.register(
+    r'supplier-payments',
+    SupplierPaymentViewSet,
+    basename='supplier-payment'
 )
 
 urlpatterns = router.urls + [

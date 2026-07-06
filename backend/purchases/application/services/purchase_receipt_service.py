@@ -9,6 +9,10 @@ from purchases.models import (
     PurchaseOrderLine
 )
 
+from finance.application.services import (
+    AccountsPayableService
+)
+
 from core.application.services.numeration_service import (
     NumerationService
 )
@@ -175,6 +179,15 @@ class PurchaseReceiptService:
         )
 
         receipt.save()
+
+        if not hasattr(
+            receipt,
+            'accountspayable'
+        ):
+
+            AccountsPayableService.create_payable(
+                purchase_receipt=receipt
+            )
 
         all_received = True
 

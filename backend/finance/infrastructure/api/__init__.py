@@ -17,3 +17,10 @@ from .customer_statement_api_view import (
 from .supplier_statement_api_view import (
     SupplierStatementAPIView
 )
+from .accounts_payable_viewset import (
+    AccountsPayableViewSet
+)
+
+from .supplier_payment_viewset import (
+    SupplierPaymentViewSet
+)
