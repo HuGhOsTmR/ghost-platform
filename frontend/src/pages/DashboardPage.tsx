@@ -1,8 +1,5 @@
 import AppLayout from '../layouts/AppLayout'
 
-import GhostCard
-  from '../components/Card/GhostCard'
-
 import GhostSectionCard
   from '../components/Dashboard/GhostSectionCard'
 

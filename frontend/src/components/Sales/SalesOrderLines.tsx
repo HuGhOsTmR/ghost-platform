@@ -10,9 +10,9 @@ import GhostSearchSelect
 
 interface Line {
 
-  product: number | ''
+  product: number
 
-  unit_of_measure: number | ''
+  unit_of_measure: number
 
   quantity: number
 
@@ -58,9 +58,9 @@ export default function SalesOrderLines({
 
       {
 
-        product: '',
+        product: 0,
 
-        unit_of_measure: '',
+        unit_of_measure: 0,
 
         quantity: 1,
 

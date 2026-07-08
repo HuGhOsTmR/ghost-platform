@@ -95,7 +95,7 @@ export default function SalesOrderCreatePage() {
   const customerOptions =
 
     customers.map(
-      customer => ({
+      (customer:any) => ({
 
         value: customer.id,
 
@@ -268,7 +268,7 @@ export default function SalesOrderCreatePage() {
 
                   customerOptions.find(
 
-                    option =>
+                    (option:any) =>
 
                       option.value ===
                       header.customer
@@ -386,7 +386,7 @@ export default function SalesOrderCreatePage() {
 
                 {
                   currencies.map(
-                    currency => (
+                    (currency:any) => (
 
                       <option
                         key={currency.id}
