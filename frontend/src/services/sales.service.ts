@@ -8,6 +8,7 @@ export const getSalesOrders = async () => {
 
   return response.data
 }
+
 export const getSalesOrder = async (
   id: string
 ) => {
@@ -19,3 +20,21 @@ export const getSalesOrder = async (
 
   return response.data
 }
+
+export const createSalesOrder =
+  async (
+    payload: any
+  ) => {
+
+    const response =
+      await api.post(
+
+        '/sales/orders/',
+
+        payload
+
+      )
+
+    return response.data
+
+  }

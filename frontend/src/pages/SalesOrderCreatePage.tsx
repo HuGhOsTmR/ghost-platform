@@ -3,18 +3,48 @@ import { useState } from 'react'
 import AppLayout
   from '../layouts/AppLayout'
 
+import SalesOrderLines
+  from '../components/Sales/SalesOrderLines'
+
+import {
+  useCustomers
+} from '../hooks/useCustomers'
+
+import {
+  useProducts
+} from '../hooks/useProducts'
+
+import {
+  useUnits
+} from '../hooks/useUnits'
+
+import {
+  useCurrencies
+} from '../hooks/useCurrencies'
+
+import {
+  useNavigate
+} from 'react-router-dom'
+
+import {
+  useCreateSalesOrder
+} from '../hooks/useCreateSalesOrder'
+
+import GhostSearchSelect
+  from '../components/Common/GhostSearchSelect'
+
 export default function SalesOrderCreatePage() {
 
   const [header, setHeader] = useState({
 
-    customer: '',
+    customer: 0,
 
     document_date:
       new Date()
         .toISOString()
         .split('T')[0],
 
-    currency: '',
+    currency: 0,
 
     notes: ''
 
@@ -23,58 +53,136 @@ export default function SalesOrderCreatePage() {
   const [lines, setLines] = useState([
 
     {
-      product: '',
+
+      product: 0,
+
+      unit_of_measure: 0,
+
       quantity: 1,
-      unit_price: 0
+
+      unit_price: 0,
+
+      tax_percentage: 0,
+
+      notes: ''
+
     }
 
   ])
 
-  const updateLine = (
-    index: number,
-    field: string,
-    value: any
-  ) => {
+  const {
+    data: customers = []
+  } = useCustomers()
 
-    const copy = [...lines]
+  const {
+    data: products = []
+  } = useProducts()
 
-    copy[index] = {
+  const {
+    data: units = []
+  } = useUnits()
 
-      ...copy[index],
+  const {
+    data: currencies = []
+  } = useCurrencies()
 
-      [field]: value
+  const navigate =
+    useNavigate()
+
+  const createOrder =
+    useCreateSalesOrder()
+
+  const customerOptions =
+
+    customers.map(
+      customer => ({
+
+        value: customer.id,
+
+        label: customer.name
+
+      })
+    )
+
+  const saveOrder = async () => {
+
+    if (!header.customer) {
+
+      alert(
+        'Seleccione un cliente'
+      )
+
+      return
 
     }
 
-    setLines(copy)
+    if (!header.currency) {
 
-  }
+      alert(
+        'Seleccione una moneda'
+      )
 
-  const addLine = () => {
+      return
 
-    setLines([
+    }
 
-      ...lines,
+    if (!lines.length) {
 
-      {
-        product: '',
-        quantity: 1,
-        unit_price: 0
-      }
+      alert(
+        'Agregue al menos una línea'
+      )
 
-    ])
+      return
 
-  }
+    }
 
-  const saveOrder = () => {
+    const payload = {
 
-    console.log({
+      customer:
+        header.customer,
 
-      ...header,
+      currency:
+        header.currency,
+
+      document_date:
+        header.document_date,
+
+      notes:
+        header.notes,
 
       lines
 
-    })
+    }
+
+    try {
+
+      const order =
+
+        await createOrder.mutateAsync(
+          payload
+        )
+
+      alert(
+        'Orden creada correctamente'
+      )
+
+      navigate(
+        `/sales/orders/${order.id}`
+      )
+
+    }
+
+    catch (error) {
+
+      console.error(
+        error
+      )
+
+      alert(
+        'Error al guardar la orden'
+      )
+
+    }
 
   }
 
@@ -88,14 +196,27 @@ export default function SalesOrderCreatePage() {
         "
       >
 
-        <h1
-          className="
-            text-3xl
-            font-bold
-          "
-        >
-          Nueva Orden de Venta
-        </h1>
+        <div>
+
+          <h1
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            Nueva Orden de Venta
+          </h1>
+
+          <p
+            className="
+              text-gray-500
+              mt-1
+            "
+          >
+            Registro de orden comercial
+          </p>
+
+        </div>
 
         <div
           className="
@@ -104,8 +225,19 @@ export default function SalesOrderCreatePage() {
             border
             border-gray-200
             p-6
+            shadow-sm
           "
         >
+
+          <h2
+            className="
+              text-lg
+              font-semibold
+              mb-4
+            "
+          >
+            Información General
+          </h2>
 
           <div
             className="
@@ -117,40 +249,63 @@ export default function SalesOrderCreatePage() {
 
             <div>
 
-              <label>
+              <label
+                className="
+                  block
+                  mb-2
+                  text-sm
+                  font-medium
+                "
+              >
                 Cliente
               </label>
 
-              <input
+              <GhostSearchSelect
 
-                value={header.customer}
+                options={customerOptions}
 
-                onChange={(e) =>
+                value={
+
+                  customerOptions.find(
+
+                    option =>
+
+                      option.value ===
+                      header.customer
+
+                  ) || null
+
+                }
+
+                placeholder="Buscar cliente..."
+
+                onChange={(selected) =>
 
                   setHeader({
 
                     ...header,
 
                     customer:
-                      e.target.value
+                      selected?.value || 0
 
                   })
 
                 }
 
-                className="
-                  w-full
-                  border
-                  rounded
-                  p-2
-                "
               />
 
             </div>
 
             <div>
 
-              <label>
+              <label
+                className="
+                  block
+                  mb-2
+                  text-sm
+                  font-medium
+                "
+              >
                 Fecha
               </label>
 
@@ -178,7 +333,7 @@ export default function SalesOrderCreatePage() {
                 className="
                   w-full
                   border
-                  rounded
+                  rounded-lg
                   p-2
                 "
               />
@@ -187,11 +342,18 @@ export default function SalesOrderCreatePage() {
 
             <div>
 
-              <label>
+              <label
+                className="
+                  block
+                  mb-2
+                  text-sm
+                  font-medium
+                "
+              >
                 Moneda
               </label>
 
-              <input
+              <select
 
                 value={header.currency}
 
@@ -202,7 +364,9 @@ export default function SalesOrderCreatePage() {
                     ...header,
 
                     currency:
-                      e.target.value
+                      Number(
+                        e.target.value
+                      )
 
                   })
 
@@ -211,16 +375,48 @@ export default function SalesOrderCreatePage() {
                 className="
                   w-full
                   border
-                  rounded
+                  rounded-lg
                   p-2
                 "
-              />
+              >
+
+                <option value={0}>
+                  Seleccione...
+                </option>
+
+                {
+                  currencies.map(
+                    currency => (
+
+                      <option
+                        key={currency.id}
+                        value={currency.id}
+                      >
+
+                        {currency.code}
+                        {' - '}
+                        {currency.name}
+
+                      </option>
+
+                    )
+                  )
+                }
+
+              </select>
 
             </div>
 
             <div>
 
-              <label>
+              <label
+                className="
+                  block
+                  mb-2
+                  text-sm
+                  font-medium
+                "
+              >
                 Notas
               </label>
 
@@ -244,7 +440,7 @@ export default function SalesOrderCreatePage() {
                 className="
                   w-full
                   border
-                  rounded
+                  rounded-lg
                   p-2
                 "
               />
@@ -255,203 +451,44 @@ export default function SalesOrderCreatePage() {
 
         </div>
 
+        <SalesOrderLines
+
+          lines={lines}
+
+          setLines={setLines}
+
+          products={products}
+
+          units={units}
+
+        />
+
         <div
           className="
-            bg-white
-            rounded-xl
-            border
-            border-gray-200
-            p-6
+            flex
+            justify-end
           "
         >
 
-          <div
-            className="
-              flex
-              justify-between
-              items-center
-              mb-4
-            "
-          >
-
-            <h2
-              className="
-                text-xl
-                font-semibold
-              "
-            >
-              Productos
-            </h2>
-
-            <button
-
-              onClick={addLine}
-
-              className="
-                bg-gray-100
-                px-4
-                py-2
-                rounded
-              "
-            >
-              Agregar Línea
-            </button>
-
-          </div>
-
-          <table
-            className="
-              w-full
-            "
-          >
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Producto
-                </th>
-
-                <th>
-                  Cantidad
-                </th>
-
-                <th>
-                  Precio
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {
-                lines.map(
-                  (
-                    line,
-                    index
-                  ) => (
-
-                    <tr
-                      key={index}
-                    >
-
-                      <td>
-
-                        <input
-
-                          value={
-                            line.product
-                          }
-
-                          onChange={(e) =>
-
-                            updateLine(
-
-                              index,
-
-                              'product',
-
-                              e.target.value
-
-                            )
-
-                          }
-
-                        />
-
-                      </td>
-
-                      <td>
-
-                        <input
-
-                          type="number"
-
-                          value={
-                            line.quantity
-                          }
-
-                          onChange={(e) =>
-
-                            updateLine(
-
-                              index,
-
-                              'quantity',
-
-                              Number(
-                                e.target.value
-                              )
-
-                            )
-
-                          }
-
-                        />
-
-                      </td>
-
-                      <td>
-
-                        <input
-
-                          type="number"
-
-                          value={
-                            line.unit_price
-                          }
-
-                          onChange={(e) =>
-
-                            updateLine(
-
-                              index,
-
-                              'unit_price',
-
-                              Number(
-                                e.target.value
-                              )
-
-                            )
-
-                          }
-
-                        />
-
-                      </td>
-
-                    </tr>
-
-                  )
-                )
-              }
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-        <div>
-
           <button
-
             onClick={saveOrder}
-
+            disabled={createOrder.isPending}
             className="
               bg-red-600
               hover:bg-red-700
+              disabled:bg-gray-400
               text-white
               px-6
               py-3
               rounded-lg
+              font-medium
             "
           >
-            Guardar Orden
+            {
+              createOrder.isPending
+                ? 'Guardando...'
+                : 'Guardar Orden'
+            }
           </button>
 
         </div>

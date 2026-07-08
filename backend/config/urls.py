@@ -18,11 +18,6 @@ urlpatterns = [
     ),
 
     path(
-        'api/iam/',
-        include('iam.urls')
-    ),
-
-    path(
         'api/token/',
         TokenObtainPairView.as_view(),
         name='token_obtain_pair'
@@ -33,6 +28,12 @@ urlpatterns = [
         TokenRefreshView.as_view(),
         name='token_refresh'
     ),
+    path(
+        'api/iam/',
+        include('iam.urls')
+    ),
+
+    
     path(
         'api/schema/',
         SpectacularAPIView.as_view(),
@@ -57,6 +58,10 @@ urlpatterns = [
     path(
         'api/treasury/',
         include('treasury.urls')
+    ),
+    path(
+        'api/core/',
+        include('core.urls')
     ),
     
     path(
