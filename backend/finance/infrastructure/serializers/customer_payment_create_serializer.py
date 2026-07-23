@@ -4,6 +4,11 @@ from rest_framework import serializers
 class CustomerPaymentCreateSerializer(
     serializers.Serializer
 ):
+    
+    bank_account = serializers.IntegerField(
+        required=False,
+        allow_null=True
+    )
 
     customer = serializers.IntegerField()
 

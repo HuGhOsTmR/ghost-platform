@@ -24,3 +24,7 @@ from .accounts_payable_viewset import (
 from .supplier_payment_viewset import (
     SupplierPaymentViewSet
 )
+
+from .aging_report_api_view import (
+    AgingReportAPIView
+)

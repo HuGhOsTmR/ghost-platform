@@ -13,7 +13,8 @@ from finance.infrastructure.api import (
     SupplierPaymentViewSet,
     FinanceDashboardAPIView,
     CustomerStatementAPIView,
-    SupplierStatementAPIView
+    SupplierStatementAPIView,
+    AgingReportAPIView
 )
 
 router = DefaultRouter()
@@ -48,6 +49,12 @@ urlpatterns = router.urls + [
         'dashboard/',
         FinanceDashboardAPIView.as_view(),
         name='finance-dashboard'
+    ),
+
+    path(
+        'aging-report/',
+        AgingReportAPIView.as_view(),
+        name='aging-report'
     ),
 
     path(

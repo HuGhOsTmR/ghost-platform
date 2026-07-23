@@ -13,12 +13,46 @@ class AccountsReceivableViewSet(
     viewsets.ReadOnlyModelViewSet
 ):
 
-    queryset = (
-        AccountsReceivable.objects
-        .all()
-        .order_by('-id')
-    )
-
     serializer_class = (
         AccountsReceivableSerializer
     )
+
+    def get_queryset(
+        self
+    ):
+
+        queryset = (
+            AccountsReceivable.objects
+            .all()
+            .order_by('-id')
+        )
+
+        customer = (
+            self.request.query_params.get(
+                'customer'
+            )
+        )
+
+        status = (
+            self.request.query_params.get(
+                'status'
+            )
+        )
+
+        if customer:
+
+            queryset = (
+                queryset.filter(
+                    customer_id=customer
+                )
+            )
+
+        if status:
+
+            queryset = (
+                queryset.filter(
+                    status=status
+                )
+            )
+
+        return queryset

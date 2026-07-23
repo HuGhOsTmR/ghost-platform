@@ -2,7 +2,8 @@ import AppLayout
   from '../layouts/AppLayout'
 
 import {
-  useParams
+  useParams,
+  useNavigate
 } from 'react-router-dom'
 
 import {
@@ -11,6 +12,18 @@ import {
 
 import StatusBadge
   from '../components/Common/StatusBadge'
+
+import {
+  useApproveSalesOrder
+} from '../hooks/useApproveSalesOrder'
+
+import {
+  useReopenSalesOrder
+} from '../hooks/useReopenSalesOrder'
+
+import {
+  useCreateSalesInvoice
+} from '../hooks/useCreateSalesInvoice'
 
 export default function SalesOrderDetailPage() {
 
@@ -22,6 +35,162 @@ export default function SalesOrderDetailPage() {
   } = useSalesOrder(
     id || ''
   )
+
+  const approveOrder =
+    useApproveSalesOrder()
+
+  const reopenOrder =
+    useReopenSalesOrder()
+
+  const navigate =
+    useNavigate()
+
+  const createInvoice =
+    useCreateSalesInvoice()
+
+  const handleApprove =
+    async () => {
+
+      if (!id)
+        return
+
+      try {
+
+        await approveOrder.mutateAsync(
+          Number(id)
+        )
+
+        alert(
+          'Orden aprobada correctamente'
+        )
+
+        window.location.reload()
+
+      }
+
+      catch (error) {
+
+        console.error(error)
+
+        alert(
+          'Error al aprobar'
+        )
+
+      }
+
+    }
+
+const handleInvoice =
+  async () => {
+
+    if (!data) return
+
+    if (
+      data.lines.length === 0
+    ) {
+
+      alert(
+        'La orden no tiene líneas para facturar'
+      )
+
+      return
+
+    }
+
+    try {
+
+      const payload = {
+
+        sales_order:
+          data.id,
+
+        invoice_date:
+          new Date()
+            .toISOString()
+            .split('T')[0],
+
+        lines:
+
+          data.lines.map(
+            (line: any) => ({
+
+              sales_order_line:
+                line.id,
+
+              quantity:
+                Number(
+                  line.quantity
+                )
+
+            })
+          )
+
+      }
+
+      const invoice =
+
+        await createInvoice
+          .mutateAsync(
+            payload
+          )
+
+      alert(
+        'Factura creada correctamente'
+      )
+
+      navigate(
+        `/sales/invoices/${invoice.id}`
+      )
+
+    }
+
+    catch (error) {
+
+      console.error(
+        error
+      )
+
+      alert(
+        'Error al generar factura'
+      )
+
+    }
+
+  }
+  const handleReopen =
+    async () => {
+
+      if (!id)
+        return
+
+      try {
+
+        await reopenOrder
+          .mutateAsync(
+            Number(id)
+          )
+
+        alert(
+          'Orden reabierta correctamente'
+        )
+
+        window.location.reload()
+
+      }
+
+      catch (error) {
+
+        console.error(
+          error
+        )
+
+        alert(
+          'Error al reabrir'
+        )
+
+      }
+
+    }
 
   if (isLoading) {
 
@@ -66,6 +235,31 @@ export default function SalesOrderDetailPage() {
       >
 
         <div>
+
+          <button
+
+            onClick={() =>
+
+              navigate(
+                '/sales/orders'
+              )
+
+            }
+
+            className="
+                    bg-gray-500
+                    hover:bg-red-600
+                    text-white
+                    px-6
+                    py-3
+                    rounded-lg
+                    font-medium
+                  "
+          >
+
+            ← Volver a Órdenes
+
+          </button>
 
           <h1
             className="
@@ -269,7 +463,135 @@ export default function SalesOrderDetailPage() {
 
         </div>
 
-      </div>
+        <div
+          className="
+            flex
+            justify-end
+            gap-3
+          "
+        >
+
+         {
+          data.status === 'DRAFT' && (
+
+            <>
+
+              <button
+
+                onClick={() =>
+
+                  navigate(
+                    `/sales/orders/${id}/edit`
+                  )
+
+                }
+
+                className="
+                  bg-blue-600
+                  hover:bg-blue-700
+                  text-white
+                  px-6
+                  py-3
+                  rounded-lg
+                  font-medium
+                "
+              >
+
+                Editar
+
+              </button>
+
+              <button
+
+                onClick={handleApprove}
+
+                disabled={
+                  approveOrder.isPending
+                }
+
+                className="
+                  bg-green-600
+                  hover:bg-green-700
+                  disabled:bg-gray-400
+                  text-white
+                  px-6
+                  py-3
+                  rounded-lg
+                  font-medium
+                "
+              >
+
+                {
+                  approveOrder.isPending
+
+                    ? 'Aprobando...'
+
+                    : 'Aprobar'
+                }
+
+              </button>
+
+            </>
+
+          )
+        }
+        {
+          data.status === 'APPROVED' && (
+            <div
+              className="
+                flex
+                gap-2
+              "
+            >
+
+              <button
+
+                onClick={
+                  handleInvoice
+                }
+
+                className="
+                  bg-green-600
+                  hover:bg-green-700
+                  text-white
+                  px-4
+                  py-2
+                  rounded-lg
+                "
+              >
+
+                Facturar Orden
+
+              </button>
+            </div>
+          )
+        }
+
+            <button
+
+              onClick={
+                handleReopen
+              }
+
+              className="
+                bg-yellow-600
+                hover:bg-yellow-700
+                text-white
+                px-4
+                py-2
+                rounded-lg
+              "
+            >
+
+              Reabrir Orden
+
+            </button>
+
+          </div>
+
+        </div>
+        
+
 
     </AppLayout>
 

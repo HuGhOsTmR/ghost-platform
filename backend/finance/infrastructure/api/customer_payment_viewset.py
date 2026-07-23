@@ -26,6 +26,9 @@ from core.models import Currency
 
 from iam.models import UserProfile
 
+from treasury.models import (
+    BankAccount
+)
 
 class CustomerPaymentViewSet(
     viewsets.ModelViewSet
@@ -94,14 +97,31 @@ class CustomerPaymentViewSet(
             )
         )
 
+        bank_account = None
+
+        if data.get(
+            'bank_account'
+        ):
+
+            bank_account = (
+                BankAccount.objects.get(
+                    pk=data[
+                        'bank_account'
+                    ]
+                )
+            )
+        
         payment = (
             CustomerPaymentService
             .create_payment(
+
                 company=profile.company,
 
                 customer=customer,
 
                 currency=currency,
+
+                bank_account=bank_account,
 
                 payment_date=data[
                     'payment_date'

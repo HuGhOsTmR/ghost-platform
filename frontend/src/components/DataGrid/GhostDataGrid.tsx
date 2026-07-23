@@ -15,13 +15,20 @@ interface Props {
   columns: Column[]
 
   data: any[]
+
+  onRowClick?: (
+    row: any
+  ) => void
+
 }
 
 export default function GhostDataGrid({
 
   columns,
 
-  data
+  data,
+
+  onRowClick
 
 }: Props) {
 
@@ -91,11 +98,22 @@ export default function GhostDataGrid({
               ) => (
 
                 <tr
+
                   key={row.id || index}
+
+                  onClick={() =>
+
+                    onRowClick?.(
+                      row
+                    )
+
+                  }
+
                   className="
                     border-t
                     border-gray-100
                     hover:bg-gray-50
+                    cursor-pointer
                   "
                 >
 

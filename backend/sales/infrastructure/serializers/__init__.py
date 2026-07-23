@@ -21,3 +21,7 @@ from .sales_invoice_line_serializer import (
 from .sales_invoice_create_serializer import (
     SalesInvoiceCreateSerializer
 )
+
+from .sales_order_update_serializer import (
+    SalesOrderUpdateSerializer
+)

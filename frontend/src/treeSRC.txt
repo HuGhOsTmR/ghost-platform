@@ -1,0 +1,172 @@
+Listado de rutas de carpetas para el volumen D
+El número de serie del volumen es 5453-8B91
+D:.
+¦   App.css
+¦   App.tsx
+¦   index.css
+¦   main.tsx
+¦   treeSRC.txt
+¦   
++---app
++---assets
+¦       hero.png
+¦       react.svg
+¦       vite.svg
+¦       
++---components
+¦   +---Button
+¦   +---Card
+¦   ¦       GhostCard.tsx
+¦   ¦       
+¦   +---Common
+¦   ¦       DocumentActions.tsx
+¦   ¦       ErrorScreen.tsx
+¦   ¦       GhostSearchSelect.tsx
+¦   ¦       LoadingScreen.tsx
+¦   ¦       StatusBadge.tsx
+¦   ¦       
+¦   +---Dashboard
+¦   ¦       AgingCard.tsx
+¦   ¦       CashFlowChart.tsx
+¦   ¦       GhostSectionCard.tsx
+¦   ¦       GhostStatCard.tsx
+¦   ¦       QuickActionsCard.tsx
+¦   ¦       RecentActivityCard.tsx
+¦   ¦       
+¦   +---DataGrid
+¦   ¦       GhostDataGrid.tsx
+¦   ¦       
+¦   +---Form
+¦   +---Input
+¦   +---Layout
+¦   +---Modal
+¦   +---Purchases
+¦   ¦       DocumentActions.tsx
+¦   ¦       EditableReceiptLinesTable.tsx
+¦   ¦       ReceiptHeader.tsx
+¦   ¦       ReceiptSummary.tsx
+¦   ¦       
+¦   +---Sales
+¦   ¦       SalesOrderLines.tsx
+¦   ¦       
+¦   +---Select
+¦   +---Sidebar
+¦   ¦       GhostSidebarItem.tsx
+¦   ¦       Sidebar.tsx
+¦   ¦       
+¦   +---Toast
+¦   +---TopBar
+¦   ¦       TopBar.tsx
+¦   ¦       
+¦   +---Workspace
+¦           Workspace.tsx
+¦           
++---features
++---hooks
+¦       useAccountsReceivable.ts
+¦       useAccountsReceivableByCustomer.ts
+¦       useAccountsReceivableDetail.ts
+¦       useAgingReport.ts
+¦       useApproveSalesOrder.ts
+¦       useBankAccounts.ts
+¦       useCancelSalesInvoice.ts
+¦       useCreateCustomerPayment.ts
+¦       useCreatePurchaseReceipt.ts
+¦       useCreateSalesInvoice.ts
+¦       useCreateSalesOrder.ts
+¦       useCurrencies.ts
+¦       useCustomerPayment.ts
+¦       useCustomerPayments.ts
+¦       useCustomers.ts
+¦       useCustomerStatement.ts
+¦       useDashboard.ts
+¦       useFinanceDashboard.ts
+¦       useProducts.ts
+¦       usePurchaseOrder.ts
+¦       usePurchaseOrders.ts
+¦       usePurchaseReceiptCreate.ts
+¦       useReopenSalesOrder.ts
+¦       useSalesInvoice.ts
+¦       useSalesInvoices.ts
+¦       useSalesOrder.ts
+¦       useSalesOrders.ts
+¦       useSnackbar.ts
+¦       useSuppliers.ts
+¦       useUnits.ts
+¦       useUpdateSalesOrder.ts
+¦       
++---layouts
+¦       AppLayout.tsx
+¦       
++---pages
+¦       AccountsReceivableDetailPage.tsx
+¦       AccountsReceivableListPage.tsx
+¦       AgingReportPage.tsx
+¦       CustomerPaymentCreatePage.tsx
+¦       CustomerPaymentDetailPage.tsx
+¦       CustomerPaymentListPage.tsx
+¦       CustomerStatementPage.tsx
+¦       DashboardPage.tsx
+¦       FinanceDashboardPage.tsx
+¦       LoginPage.tsx
+¦       PurchaseOrderDetailPage.tsx
+¦       PurchaseOrdersPage.tsx
+¦       PurchaseReceiptCreatePage.tsx
+¦       SalesInvoiceDetailPage.tsx
+¦       SalesInvoiceListPage.tsx
+¦       SalesOrderCreatePage.tsx
+¦       SalesOrderDetailPage.tsx
+¦       SalesOrderEditPage.tsx
+¦       SalesOrdersPage.tsx
+¦       
++---routes
+¦       AppRouter.tsx
+¦       ProtectedRoute.tsx
+¦       
++---services
+¦       api.ts
+¦       auth.service.ts
+¦       currency.service.ts
+¦       customer.service.ts
+¦       dashboard.service.ts
+¦       finance.service.ts
+¦       product.service.ts
+¦       purchase.service.ts
+¦       sales.service.ts
+¦       supplier.service.ts
+¦       treasury.service.ts
+¦       unit.service.ts
+¦       
++---store
+¦       authStore.ts
+¦       
++---themes
++---types
+¦   ¦   common.ts
+¦   ¦   dashboard.ts
+¦   ¦   index.ts
+¦   ¦   purchases.ts
+¦   ¦   ui.ts
+¦   ¦   
+¦   +---purchases
+¦           api.ts
+¦           enums.ts
+¦           index.ts
+¦           payload.ts
+¦           receipt.ts
+¦           ui.ts
+¦           validation.ts
+¦           
++---utils
+    ¦   index.ts
+    ¦   purchases.ts
+    ¦   
+    +---purchases
+            index.ts
+            mapper.ts
+            payload.ts
+            receipt.ts
+            selectors.ts
+            summary.ts
+            validator.ts
+            

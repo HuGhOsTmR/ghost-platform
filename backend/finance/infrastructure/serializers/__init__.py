@@ -40,3 +40,7 @@ from .supplier_payment_create_serializer import (
 from .supplier_payment_allocation_serializer import (
     SupplierPaymentAllocationSerializer
 )
+
+from .aging_report_serializer import (
+    AgingReportSerializer
+)

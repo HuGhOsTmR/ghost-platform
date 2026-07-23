@@ -21,6 +21,9 @@ import {
   useAuthStore
 } from '../../store/authStore'
 
+import GhostSidebarItem
+  from './GhostSidebarItem'
+  
 export default function Sidebar() {
 
   const navigate = useNavigate()
@@ -30,7 +33,7 @@ export default function Sidebar() {
       (state) => state.logout
     )
 
-  const menu = [
+const menu = [
 
     {
       label: 'Dashboard',
@@ -41,27 +44,136 @@ export default function Sidebar() {
     {
       label: 'Ventas',
       icon: ShoppingCart,
-      path: '/sales/orders'
+
+      children: [
+
+        {
+          label: 'Órdenes',
+          path: '/sales/orders'
+        },
+
+        {
+          label: 'Facturas',
+          path: '/sales/invoices'
+        },
+
+        {
+          label: 'Clientes',
+          path: '/mdm/customers'
+        }
+
+      ]
     },
 
     {
       label: 'Compras',
-      icon: Package
+      icon: Package,
+
+      children: [
+
+        {
+          label: 'Órdenes',
+          path: '/purchases/orders'
+        },
+
+        {
+          label: 'Recepciones',
+          path: '/purchases/receipts'
+        },
+
+        {
+          label: 'Proveedores',
+          path: '/mdm/suppliers'
+        }
+
+      ]
     },
 
     {
       label: 'Inventario',
-      icon: Package
-    },
+      icon: Package,
 
-    {
-      label: 'Finanzas',
-      icon: Landmark
+      children: [
+
+        {
+          label: 'Stock',
+          path: '/inventory/stock'
+        },
+
+        {
+          label: 'Almacenes',
+          path: '/inventory/warehouses'
+        },
+
+        {
+          label: 'Transferencias',
+          path: '/inventory/transfers'
+        }
+
+      ]
     },
 
     {
       label: 'Tesorería',
-      icon: Wallet
+      icon: Wallet,
+
+      children: [
+
+        {
+          label: 'Caja',
+          path: '/treasury/cash-accounts'
+        },
+
+        {
+          label: 'Bancos',
+          path: '/treasury/bank-accounts'
+        },
+
+        {
+          label: 'Movimientos',
+          path: '/treasury/transactions'
+        }
+
+      ]
+    },
+
+   {
+      label: 'Finanzas',
+      icon: Landmark,
+
+      children: [
+
+        {
+          label: 'Dashboard',
+          path: '/finance/dashboard'
+        },
+
+        {
+          label: 'Cuentas por Cobrar',
+          path: '/finance/accounts-receivable'
+        },
+
+        {
+          label: 'Estado de Cuenta',
+          path: '/finance/customer-statement'
+        },
+        
+        {
+          label: 'Aging Report',
+          path: '/finance/aging-report'
+        },
+        
+        {
+          label: 'Cobros',
+          path: '/finance/customer-payments'
+        },
+
+        {
+          label: 'Cuentas por Pagar',
+          path: '/finance/accounts-payable'
+        }
+
+      ]
     },
 
     {
@@ -98,6 +210,7 @@ export default function Sidebar() {
       label: 'Ayuda',
       icon: CircleHelp
     }
+
   ]
 
   return (
@@ -157,56 +270,26 @@ export default function Sidebar() {
       >
 
         {
-          menu.map((item) => {
+          menu.map(
+            (item) => (
 
-            const Icon = item.icon
+              <GhostSidebarItem
 
-            return (
-
-              <button
                 key={item.label}
 
-                onClick={() => {
+                label={item.label}
 
-                  if (item.path) {
+                icon={item.icon}
 
-                    navigate(
-                      item.path
-                    )
+                path={item.path}
 
-                  }
+                children={item.children}
 
-                }}
-
-                className="
-                  w-full
-                  flex
-                  items-center
-                  gap-3
-                  px-4
-                  py-3
-                  rounded
-                  mb-1
-                  text-left
-
-                  hover:bg-[#FF1E1E]
-                  transition
-                "
-              >
-
-                <Icon size={18} />
-
-                <span>
-                  {item.label}
-                </span>
-
-              </button>
+              />
 
             )
-
-          })
+          )
         }
-
       </nav>
 
       <div

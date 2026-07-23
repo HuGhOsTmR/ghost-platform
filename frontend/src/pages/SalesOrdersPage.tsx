@@ -94,8 +94,9 @@ export default function SalesOrdersPage() {
 
           <button
 
-            onClick={() => {
+            onClick={(e) => {
 
+              e.stopPropagation()
               navigate(
                 `/sales/orders/${row.id}`
               )
@@ -115,7 +116,9 @@ export default function SalesOrdersPage() {
 
           <button
 
-            onClick={() => {
+            onClick={(e) => {
+
+              e.stopPropagation()
 
               navigate(
                 `/sales/orders/${row.id}/edit`
@@ -202,8 +205,19 @@ export default function SalesOrdersPage() {
         </div>
 
         <GhostDataGrid
+
           columns={columns}
+
           data={data || []}
+
+          onRowClick={(row) =>
+
+            navigate(
+              `/sales/orders/${row.id}`
+            )
+
+          }
+
         />
 
       </div>

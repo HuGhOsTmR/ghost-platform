@@ -21,6 +21,13 @@ from sales.infrastructure.serializers import (
     SalesInvoiceCreateSerializer
 )
 
+from rest_framework.decorators import (
+    action
+)
+
+from sales.application.services import (
+    SalesInvoiceCancelService
+)
 
 class SalesInvoiceViewSet(
     viewsets.ModelViewSet
@@ -101,4 +108,31 @@ class SalesInvoiceViewSet(
                 invoice
             ).data,
             status=status.HTTP_201_CREATED
+        )
+
+    @action(
+        detail=True,
+        methods=['post']
+    )
+    def cancel(
+        self,
+        request,
+        pk=None
+    ):
+
+        invoice = (
+            self.get_object()
+        )
+
+        invoice = (
+            SalesInvoiceCancelService
+            .cancel_invoice(
+                invoice
+            )
+        )
+
+        return Response(
+            SalesInvoiceSerializer(
+                invoice
+            ).data
         )

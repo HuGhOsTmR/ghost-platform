@@ -36,6 +36,9 @@ class CustomerStatementService:
 
             'documents': [
                 {
+                    'id':
+                        item.id, 
+
                     'document_number':
                         item.document_number,
 
