@@ -2,7 +2,7 @@ import { api } from './api'
 
 import type {
     PurchaseReceiptCreate
-} from "../types/purchases";
+} from "../types";
 
 export const getPurchaseOrders =
   async () => {

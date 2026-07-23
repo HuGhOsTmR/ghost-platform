@@ -35,8 +35,17 @@ class PurchaseOrderViewSet(
 
     queryset = (
         PurchaseOrder.objects
-        .all()
-        .order_by('-id')
+        .select_related(
+            "supplier",
+            "currency",
+            "warehouse",      # si existe este campo
+        )
+        .prefetch_related(
+            "lines",
+            "lines__product",
+            "lines__unit_of_measure",
+        )
+        .order_by("-id")
     )
 
     serializer_class = (

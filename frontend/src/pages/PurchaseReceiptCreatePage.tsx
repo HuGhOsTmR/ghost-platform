@@ -63,7 +63,7 @@ const PurchaseReceiptCreatePage = () => {
 
     }
 
-    console.log(controller.computed.summary);
+    
     
     return (
 

@@ -21,6 +21,11 @@ class PurchaseOrderSerializer(
         read_only=True
     )
 
+    warehouse_name = serializers.CharField(
+        source="warehouse.name",
+        read_only=True
+    )
+
     lines = PurchaseOrderLineSerializer(
         many=True
     )
@@ -43,6 +48,9 @@ class PurchaseOrderSerializer(
 
             'currency',
             'currency_code',
+
+            'warehouse',
+            'warehouse_name',
 
             'subtotal',
             'tax_amount',

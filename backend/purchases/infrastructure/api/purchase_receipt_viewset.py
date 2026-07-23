@@ -28,8 +28,16 @@ class PurchaseReceiptViewSet(
 
     queryset = (
         PurchaseReceipt.objects
-        .all()
-        .order_by('-id')
+        .select_related(
+            "supplier",
+            "currency",
+            "purchase_order",
+        )
+        .prefetch_related(
+            "lines",
+            "lines__product",
+        )
+        .order_by("-id")
     )
 
     serializer_class = (
