@@ -4,6 +4,18 @@ import type {
     PurchaseReceiptCreate
 } from "../types";
 
+
+import type {
+  PurchaseOrderApi,
+} from '../types/purchases/api';
+
+import {
+  mapPurchaseOrderApi,
+} from '../utils/purchases/apiMapper';
+
+
+
+
 export const getPurchaseOrders =
   async () => {
 

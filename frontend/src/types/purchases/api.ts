@@ -127,3 +127,61 @@ export interface PurchaseReceipt {
     lines: PurchaseReceiptLine[];
 
 }
+
+export interface PurchaseOrderApiLine {
+
+    id: number;
+
+    product: number;
+
+    product_code: string;
+
+    product_name: string;
+
+    unit_of_measure: number;
+
+    unit_of_measure_name: string;
+
+    quantity: number;
+
+    received_quantity: number;
+
+    pending_quantity: number;
+
+    unit_price: number;
+
+    tax_percentage: number;
+
+    line_total: number;
+
+    notes: string;
+}
+
+export interface PurchaseOrderApi {
+
+    id: number;
+
+    document_number: string;
+
+    supplier: number;
+
+    supplier_name: string;
+
+    currency: number;
+
+    currency_code: string;
+
+    document_date: string;
+
+    subtotal: number;
+
+    tax_amount: number;
+
+    total_amount: number;
+
+    status: string;
+
+    notes: string;
+
+    lines: PurchaseOrderApiLine[];
+}
